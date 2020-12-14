@@ -1,7 +1,6 @@
 import java.util.Random;
 
 public class MedChar {
-    private String type;
     private int strength;
     private int tough;
     private int intel;
@@ -44,12 +43,6 @@ public class MedChar {
         }
     }
 
-    public boolean checkOP(int total){
-        
-        return false;
-    }
-
-    public String getType(){ return this.type; }
     public int getStrength(){ return this.strength; }
     public int getTough(){ return this.tough; }
     public int getIntel(){ return this.intel; }
