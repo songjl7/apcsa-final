@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.*;
 
 public class MedievalTimes {
@@ -106,8 +107,25 @@ public class MedievalTimes {
                     String fileName = userScan.nextLine();
                     file = new File(fileName);
                     fileScan = new Scanner(file);
+                    
+                    int errorCount = 0;
+                    
+                    System.out.println("\n");
+                    fileScan.nextLine();
                     while (fileScan.hasNextLine()){
-                        System.out.println(fileScan.nextLine());
+                        ArrayList<String> charInfo = new ArrayList<String>();
+                        String current = fileScan.nextLine();
+                        System.out.println(current);
+                        for (String word : current.split(",")){
+                            charInfo.add(word);
+                        }
+                        if(!checkCharacter(charInfo)) { errorCount++; }
+                        System.out.println("errors: " + errorCount);
+                    }
+                    if (errorCount > 0){
+                        System.out.println("\nYour file is invalid!");
+                    } else {
+                        System.out.println("\nYour file is valid!");
                     }
 
                     fileScan.close();
@@ -148,6 +166,34 @@ public class MedievalTimes {
     }
 
     public static void showMenu(){
-        System.out.println("\n★ Create new game (1)\n★ Validate/load save file(2)\n★ Reroll existing character(3)\n★ Quit(4)");
+        System.out.println("\n★ Create new game(1)\n★ Validate/load save file(2)\n★ Reroll existing character(3)\n★ Quit(4)");
+    }
+
+    public static boolean checkCharacter(ArrayList<String> charInfo){ 
+        int totalScore = 0;       
+        if (charInfo.size() < 7){
+            return false;
+        } else if (charInfo.size() == 7) {
+            totalScore = Integer.parseInt(charInfo.get(2)) + Integer.parseInt(charInfo.get(3)) + Integer.parseInt(charInfo.get(4)) + Integer.parseInt(charInfo.get(5)) + Integer.parseInt(charInfo.get(6));
+            System.out.println(totalScore);
+        }
+        
+        if (totalScore < 8 || totalScore > 28){
+            return false;
+        } else if ((charInfo.get(1)).equals("knight") && (Integer.parseInt(charInfo.get(2)) >= 11 || Integer.parseInt(charInfo.get(2)) <= 6)) {
+            return false;
+        } else if ((charInfo.get(1)).equals("peasant") && (Integer.parseInt(charInfo.get(3)) >= 11 || Integer.parseInt(charInfo.get(3)) <= 6)) {
+            return false;
+        } else if ((charInfo.get(1)).equals("cleric") && (Integer.parseInt(charInfo.get(4)) >= 11 || Integer.parseInt(charInfo.get(4)) <= 6)) {
+            return false;
+        } else if ((charInfo.get(1)).equals("mage") && (Integer.parseInt(charInfo.get(5)) >= 11 || Integer.parseInt(charInfo.get(5)) <= 6)) {
+            return false;
+        } else if ((charInfo.get(1)).equals("courtier") && (Integer.parseInt(charInfo.get(6)) >= 11 || Integer.parseInt(charInfo.get(6)) <= 6)) {
+            return false;
+        } else if ((charInfo.get(1)).equals("knight") || (charInfo.get(1)).equals("peasant") || (charInfo.get(1)).equals("cleric") || (charInfo.get(1)).equals("mage") || (charInfo.get(1)).equals("courtier")){
+            return true;
+        }
+
+        return false;
     }
 }

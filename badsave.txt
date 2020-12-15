@@ -1,0 +1,4 @@
+blah
+error,knight,0,0,0,0,0
+incorrect,???,3,0,9,4,2
+bad,mage,11,12

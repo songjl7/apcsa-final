@@ -25,8 +25,8 @@ public class MedChar {
         } else if (type.toLowerCase().equals("cleric")){
             this.strength = rand.nextInt(6);
             this.tough = rand.nextInt(6);
-            this.intel = rand.nextInt(6);
-            this.magic = rand.nextInt(4) + 7;
+            this.intel = rand.nextInt(4) + 7;
+            this.magic = rand.nextInt(6);
             this.influence = rand.nextInt(6);
         } else if (type.toLowerCase().equals("mage")){
             this.strength = rand.nextInt(6);
@@ -48,9 +48,4 @@ public class MedChar {
     public int getIntel(){ return this.intel; }
     public int getMagic(){ return this.magic; }
     public int getInfluence(){ return this.influence; }
-
-    // public boolean checkTooMany(Party party){
-    //     return 
-    // }
-    
 }
