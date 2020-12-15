@@ -1,5 +1,5 @@
 Cheeseland
-cheeseman,knight,7,3,5,0,0
-cheesewoman,knight,10,4,0,5,3
-cheesedude,peasant,5,10,3,0,5
-cheesebro,cleric,3,0,9,2,0
+Cheeseman,knight,7,4,5,2,2
+Cheesewoman,knight,9,2,3,2,4
+Cheesedude,peasant,1,8,1,0,4
+Cheesebro,cleric,1,1,7,5,2

@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 import java.util.ArrayList;
 import java.io.*;
 
@@ -47,7 +48,7 @@ public class MedievalTimes {
                                 MedChar character = new MedChar(type);
                                 System.out.println("Enter name of character");
                                 String name = userScan.nextLine();
-                                output.println(name + "," + type.toLowerCase() + "," + character.getStrength() + "," + character.getTough() + "," + character.getIntel() + "," + character.getMagic() + "," + character.getInfluence());
+                                output.println(name + "," + character);
                             }
                         } else if (type.toLowerCase().equals("peasant")){
                             peasantCount++;
@@ -58,7 +59,7 @@ public class MedievalTimes {
                                 MedChar character = new MedChar(type);
                                 System.out.println("Enter name of character");
                                 String name = userScan.nextLine();
-                                output.println(name + "," + type.toLowerCase() + "," + character.getStrength() + "," + character.getTough() + "," + character.getIntel() + "," + character.getMagic() + "," + character.getInfluence());
+                                output.println(name + "," + character);
                             }
                         } else if (type.toLowerCase().equals("cleric")){
                             clericCount++;
@@ -69,7 +70,7 @@ public class MedievalTimes {
                                 MedChar character = new MedChar(type);
                                 System.out.println("Enter name of character");
                                 String name = userScan.nextLine();
-                                output.println(name + "," + type.toLowerCase() + "," + character.getStrength() + "," + character.getTough() + "," + character.getIntel() + "," + character.getMagic() + "," + character.getInfluence());
+                                output.println(name + "," + character);
                             }
                         } else if (type.toLowerCase().equals("mage")){
                             mageCount++;
@@ -80,7 +81,7 @@ public class MedievalTimes {
                                 MedChar character = new MedChar(type);
                                 System.out.println("Enter name of character");
                                 String name = userScan.nextLine();
-                                output.println(name + "," + type.toLowerCase() + "," + character.getStrength() + "," + character.getTough() + "," + character.getIntel() + "," + character.getMagic() + "," + character.getInfluence());
+                                output.println(name + "," + character);
                             }
                         } else if (type.toLowerCase().equals("courtier")){
                             courtierCount++;
@@ -91,7 +92,7 @@ public class MedievalTimes {
                                 MedChar character = new MedChar(type);
                                 System.out.println("Enter name of character");
                                 String name = userScan.nextLine();
-                                output.println(name + "," + type.toLowerCase() + "," + character.getStrength() + "," + character.getTough() + "," + character.getIntel() + "," + character.getMagic() + "," + character.getInfluence());
+                                output.println(name + "," + character);
                             }
                         }
                     }
@@ -139,15 +140,62 @@ public class MedievalTimes {
                     String fileName = userScan.nextLine();
                     file = new File(fileName);
                     fileScan = new Scanner(file);
+                    Random rand = new Random();
 
                     if (file.length() == 0){
                         System.out.println("File is empty! Please try again.");
                         break;
                     } else if (file.length() > 0){
+                        ArrayList<String> names = new ArrayList<String>();
                         while (fileScan.hasNextLine()){
-                            System.out.println(fileScan.nextLine());
+                            String current = fileScan.nextLine();
+                            String[] ugh = current.split(",");
+                            names.add(ugh[0].toLowerCase());
+                            System.out.println(current);
                         }
-                        System.out.println("Which character would you like to change?");
+                        
+                        System.out.println("\nWhich character would you like to change?");
+                        String chosenChar = userScan.nextLine();
+
+                        for (int i = 0; i < 4; i++){
+                            if (chosenChar.toLowerCase().equals(names.get(i))){
+                                MedChar randomChar = new MedChar();
+                                String randCharInfo = chosenChar + "," + randomChar;
+
+                                String oldContent = "";
+                                ArrayList<String> oldContentArray = new ArrayList<String>();
+                                BufferedReader reader = new BufferedReader(new FileReader(file));
+                                String current = reader.readLine();
+                                while (current != null){
+                                    oldContent = oldContent + current + "\n";
+                                    oldContentArray.add(current);
+                                    current = reader.readLine();
+                                }
+                                System.out.println(oldContent);
+
+                                String oldContentString = String.join(", ", oldContentArray);
+                                System.out.println(oldContentString);
+                                int indexOfMatch = oldContentString.indexOf(chosenChar);
+                                String oldType = oldContentArray.get(indexOfMatch);
+                                System.out.println(oldType);
+                                // String oldCharInfo = oldContentString.substring(indexOfMatch, chosenChar.length() + 10);
+                                // System.out.println(oldCharInfo);
+                                
+                                // String newContent = oldContent.replaceAll(oldContent.substring(indexOfMatch, (chosenChar.length() + 10)), randCharInfo);
+                                
+                                // FileWriter writer = new FileWriter(file);
+                                // writer.write(newContent);
+    
+                                reader.close();
+                                // writer.close();
+
+                                System.out.println("Success! The chosen character's type and stats have been randomized.");
+
+                                break;
+                            } else {
+                                System.out.println("No character was found. Try again!");
+                            }
+                        }
 
                     }
 
@@ -175,7 +223,6 @@ public class MedievalTimes {
             return false;
         } else if (charInfo.size() == 7) {
             totalScore = Integer.parseInt(charInfo.get(2)) + Integer.parseInt(charInfo.get(3)) + Integer.parseInt(charInfo.get(4)) + Integer.parseInt(charInfo.get(5)) + Integer.parseInt(charInfo.get(6));
-            System.out.println(totalScore);
         }
         
         if (totalScore < 8 || totalScore > 28){
