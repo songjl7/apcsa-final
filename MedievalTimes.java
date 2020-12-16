@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Random;
 import java.util.ArrayList;
 import java.io.*;
 
@@ -121,7 +120,7 @@ public class MedievalTimes {
                             charInfo.add(word);
                         }
                         if(!checkCharacter(charInfo)) { errorCount++; }
-                        System.out.println("errors: " + errorCount);
+                        System.out.println("Errors: " + errorCount);
                     }
                     if (errorCount > 0){
                         System.out.println("\nYour file is invalid!");
@@ -140,7 +139,6 @@ public class MedievalTimes {
                     String fileName = userScan.nextLine();
                     file = new File(fileName);
                     fileScan = new Scanner(file);
-                    Random rand = new Random();
 
                     if (file.length() == 0){
                         System.out.println("File is empty! Please try again.");
@@ -153,14 +151,17 @@ public class MedievalTimes {
                             names.add(ugh[0].toLowerCase());
                             System.out.println(current);
                         }
+
+                        names.remove(0);
                         
                         System.out.println("\nWhich character would you like to change?");
                         String chosenChar = userScan.nextLine();
 
-                        for (int i = 0; i < 4; i++){
+                        for (int i = 0; i < file.length() - 1; i++){
                             if (chosenChar.toLowerCase().equals(names.get(i))){
+                                int indexOfMatch = i;
                                 MedChar randomChar = new MedChar();
-                                String randCharInfo = chosenChar + "," + randomChar;
+                                String newCharInfo = chosenChar + "," + randomChar;
 
                                 String oldContent = "";
                                 ArrayList<String> oldContentArray = new ArrayList<String>();
@@ -171,34 +172,28 @@ public class MedievalTimes {
                                     oldContentArray.add(current);
                                     current = reader.readLine();
                                 }
-                                System.out.println(oldContent);
 
-                                String oldContentString = String.join(", ", oldContentArray);
-                                System.out.println(oldContentString);
-                                int indexOfMatch = oldContentString.indexOf(chosenChar);
-                                String oldType = oldContentArray.get(indexOfMatch);
-                                System.out.println(oldType);
-                                // String oldCharInfo = oldContentString.substring(indexOfMatch, chosenChar.length() + 10);
-                                // System.out.println(oldCharInfo);
+                                String oldCharInfo = oldContentArray.get(indexOfMatch + 1);
+
+                                String oldContentString = String.join("\n", oldContentArray);
                                 
-                                // String newContent = oldContent.replaceAll(oldContent.substring(indexOfMatch, (chosenChar.length() + 10)), randCharInfo);
-                                
-                                // FileWriter writer = new FileWriter(file);
-                                // writer.write(newContent);
+                                String newContent = oldContentString.replaceAll(oldCharInfo, newCharInfo);
+
+                                FileWriter writer = new FileWriter(file, false);
+                                writer.write(newContent);
     
                                 reader.close();
-                                // writer.close();
+                                writer.close();
 
                                 System.out.println("Success! The chosen character's type and stats have been randomized.");
 
                                 break;
                             } else {
-                                System.out.println("No character was found. Try again!");
+                                System.out.println("No match yet, checking next character...");
                             }
                         }
 
                     }
-
                     showMenu();
                     option = Integer.parseInt(userScan.nextLine());
                 }
